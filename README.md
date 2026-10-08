@@ -1,169 +1,267 @@
-# 🛒 Zepto E-commerce SQL Data Analyst Portfolio Project
-This is a complete, real-world data analyst portfolio project based on an e-commerce inventory dataset scraped from [Zepto](https://www.zeptonow.com/) — one of India’s fastest-growing quick-commerce startups. This project simulates real analyst workflows, from raw data exploration to business-focused data analysis.
-
-This project is perfect for:
-- 📊 Data Analyst aspirants who want to build a strong **Portfolio Project** for interviews and LinkedIn
-- 📚 Anyone learning SQL hands-on
-- 💼 Preparing for interviews in retail, e-commerce, or product analytics
-
-# **🎥 Watch this [YouTube video](https://www.youtube.com/watch?v=x8dfQkKTyP0&list=PLAx-M6Di0SisFJ1rv5M_FRHUlGA5rtUf_&index=2) to implement the full project from scratch:**  
-[![SQL Data Analyst Portfolio Project using Zepto Inventory Dataset](https://github.com/user-attachments/assets/a1895ada-15e4-4f98-aa0d-597a4092c845)](https://www.youtube.com/watch?v=x8dfQkKTyP0&list=PLAx-M6Di0SisFJ1rv5M_FRHUlGA5rtUf_&index=2)
-🔗 *Link to Video:* [Watch on Youtube](https://www.youtube.com/watch?v=x8dfQkKTyP0&list=PLAx-M6Di0SisFJ1rv5M_FRHUlGA5rtUf_&index=2)
+# 🛒 Zepto Inventory & Pricing Analysis using PostgreSQL
 
 ## 📌 Project Overview
 
-The goal is to simulate how actual data analysts in the e-commerce or retail industries work behind the scenes to use SQL to:
+This project focuses on analyzing **Zepto e-commerce inventory data using PostgreSQL** to uncover insights related to product pricing, discounts, inventory availability, stock status, and product categories.
 
-✅ Set up a messy, real-world e-commerce inventory **database**
+The project follows a practical **Data Analyst workflow**, including data exploration, data cleaning, SQL analysis, and business-focused insight generation.
 
-✅ Perform **Exploratory Data Analysis (EDA)** to explore product categories, availability, and pricing inconsistencies
+The goal is to understand product-level and category-level patterns that can support better **pricing, inventory, and product management decisions**.
 
-✅ Implement **Data Cleaning** to handle null values, remove invalid entries, and convert pricing from paise to rupees
+---
 
-✅ Write **business-driven SQL queries** to derive insights around **pricing, inventory, stock availability, revenue** and more
+## 🎯 Business Objectives
 
-## 📁 Dataset Overview
-The dataset was sourced from [Kaggle](https://www.kaggle.com/datasets/palvinder2006/zepto-inventory-dataset/data?select=zepto_v2.csv) and was originally scraped from Zepto’s official product listings. It mimics what you’d typically encounter in a real-world e-commerce inventory system.
+The analysis aims to answer questions such as:
 
-Each row represents a unique SKU (Stock Keeping Unit) for a product. Duplicate product names exist because the same product may appear multiple times in different package sizes, weights, discounts, or categories to improve visibility – exactly how real catalog data looks.
+* Which product categories have the most products?
+* Which products offer the highest discounts?
+* Which products have the highest MRP?
+* How many products are currently out of stock?
+* Which categories offer the highest average discount?
+* Which expensive products have low discounts?
+* What is the estimated potential revenue by category?
+* Which products provide better value based on price per gram?
+* How does inventory weight vary across categories?
 
-🧾 Columns:
-- **sku_id:** Unique identifier for each product entry (Synthetic Primary Key)
+---
 
-- **name:** Product name as it appears on the app
+## 📊 Dataset
 
-- **category:** Product category like Fruits, Snacks, Beverages, etc.
+The dataset contains Zepto product inventory information, including product names, categories, pricing, discounts, stock availability, and product weights.
 
-- **mrp:** Maximum Retail Price (originally in paise, converted to ₹)
+### Dataset Features
 
-- **discountPercent:** Discount applied on MRP
+| Column                   | Description                   |
+| ------------------------ | ----------------------------- |
+| `sku_id`                 | Unique product/SKU identifier |
+| `name`                   | Product name                  |
+| `category`               | Product category              |
+| `mrp`                    | Maximum Retail Price          |
+| `discountPercent`        | Discount percentage           |
+| `discountedSellingPrice` | Selling price after discount  |
+| `availableQuantity`      | Available inventory quantity  |
+| `weightInGms`            | Product weight in grams       |
+| `outOfStock`             | Stock availability indicator  |
+| `quantity`               | Product/package quantity      |
 
-- **discountedSellingPrice:** Final price after discount (also converted to ₹)
+---
 
-- **availableQuantity:** Units available in inventory
+## 🛠️ Tools & Technologies
 
-- **weightInGms:** Product weight in grams
+* **PostgreSQL**
+* **SQL**
+* **pgAdmin**
+* **Microsoft Excel / CSV**
+* **Power BI** *(for visualization, if applicable)*
 
-- **outOfStock:** Boolean flag indicating stock availability
+---
 
-- **quantity:** Number of units per package (mixed with grams for loose produce)
-
-## 🔧 Project Workflow
-
-Here’s a step-by-step breakdown of what we do in this project:
+## 🔄 Project Workflow
 
 ### 1. Database & Table Creation
-We start by creating a SQL table with appropriate data types:
 
-```sql
-CREATE TABLE zepto (
-  sku_id SERIAL PRIMARY KEY,
-  category VARCHAR(120),
-  name VARCHAR(150) NOT NULL,
-  mrp NUMERIC(8,2),
-  discountPercent NUMERIC(5,2),
-  availableQuantity INTEGER,
-  discountedSellingPrice NUMERIC(8,2),
-  weightInGms INTEGER,
-  outOfStock BOOLEAN,
-  quantity INTEGER
-);
-```
+Created a PostgreSQL table with appropriate data types for the Zepto inventory dataset.
 
 ### 2. Data Import
-- Loaded CSV using pgAdmin's import feature.
 
- - If you're not able to use the import feature, write this code instead:
-```sql
-   \copy zepto(category,name,mrp,discountPercent,availableQuantity,
-            discountedSellingPrice,weightInGms,outOfStock,quantity)
-  FROM 'data/zepto_v2.csv' WITH (FORMAT csv, HEADER true, DELIMITER ',', QUOTE '"', ENCODING 'UTF8');
+Imported the CSV dataset into PostgreSQL using pgAdmin.
+
+### 3. Data Exploration
+
+Performed exploratory analysis to understand:
+
+* Total number of products
+* Product categories
+* Product pricing
+* Discount patterns
+* Stock availability
+* Duplicate product entries
+* Missing values
+
+### 4. Data Cleaning
+
+Performed data cleaning to improve data quality, including:
+
+* Checking for NULL values
+* Identifying duplicate records
+* Identifying invalid pricing values
+* Handling zero-value MRP and selling prices
+* Converting price values into a consistent format
+
+### 5. SQL Analysis
+
+Used PostgreSQL to perform business-oriented analysis using:
+
+* `SELECT`
+* `WHERE`
+* `GROUP BY`
+* `HAVING`
+* `ORDER BY`
+* `CASE WHEN`
+* Aggregate functions
+* Subqueries
+* CTEs
+* Window functions
+* Ranking functions
+
+---
+
+## 📈 Key Analysis Performed
+
+### 🏷️ Product & Category Analysis
+
+* Identified categories with the highest number of products
+* Analyzed product distribution across categories
+* Identified duplicate product names across different SKUs
+
+### 💰 Pricing & Discount Analysis
+
+* Found products with the highest discount percentages
+* Identified high-MRP products
+* Analyzed average discounts by category
+* Identified expensive products with relatively low discounts
+* Calculated price per gram for selected products
+
+### 📦 Inventory Analysis
+
+* Compared in-stock and out-of-stock products
+* Identified high-value products that are out of stock
+* Analyzed inventory quantity across categories
+* Calculated total inventory weight by category
+
+### 💵 Revenue Analysis
+
+* Estimated potential revenue at the product/category level
+* Compared revenue potential across different product categories
+
+---
+
+## 🔍 SQL Concepts Demonstrated
+
+This project demonstrates practical knowledge of:
+
+```text
+Data Exploration
+Data Cleaning
+Filtering
+Aggregation
+GROUP BY
+HAVING
+CASE Statements
+Subqueries
+CTEs
+Window Functions
+Ranking
+Business Analysis
 ```
-- Faced encoding issues (UTF-8 error), which were fixed by saving the CSV file using CSV UTF-8 format.
 
-### 3. 🔍 Data Exploration
-- Counted the total number of records in the dataset
+---
 
-- Viewed a sample of the dataset to understand structure and content
+## 📂 Project Structure
 
-- Checked for null values across all columns
+```text
+zepto-inventory-analysis-postgresql/
+│
+├── data/
+│   └── zepto_v2.csv
+│
+├── sql/
+│   └── zepto_inventory_analysis.sql
+│
+├── screenshots/
+│   └── dashboard.png
+│
+└── README.md
+```
 
-- Identified distinct product categories available in the dataset
+---
 
-- Compared in-stock vs out-of-stock product counts
+## 🚀 How to Run the Project
 
-- Detected products present multiple times, representing different SKUs
+### 1. Clone the repository
 
-### 4. 🧹 Data Cleaning
-- Identified and removed rows where MRP or discounted selling price was zero
+```bash
+git clone https://github.com/YOUR-USERNAME/zepto-inventory-analysis-postgresql.git
+```
 
-- Converted mrp and discountedSellingPrice from paise to rupees for consistency and readability
-  
-### 5. 📊 Business Insights
-- Found top 10 best-value products based on discount percentage
+### 2. Open PostgreSQL / pgAdmin
 
-- Identified high-MRP products that are currently out of stock
+Create a new database and connect to it.
 
-- Estimated potential revenue for each product category
+### 3. Create the table
 
-- Filtered expensive products (MRP > ₹500) with minimal discount
+Run the table creation query from:
 
-- Ranked top 5 categories offering highest average discounts
+```text
+sql/zepto_inventory_analysis.sql
+```
 
-- Calculated price per gram to identify value-for-money products
+### 4. Import the dataset
 
-- Grouped products based on weight into Low, Medium, and Bulk categories
+Import:
 
-- Measured total inventory weight per product category
+```text
+data/zepto_v2.csv
+```
 
+into the PostgreSQL table.
 
-## 🛠️ How to Use This Project
+### 5. Run the SQL queries
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/amlanmohanty/zepto-SQL-data-analysis-project.git
-   cd zepto-SQL-data-analysis-project
-   ```
-2. **Open zepto_SQL_data_analysis.sql**
+Execute the analysis queries to reproduce the results and insights.
 
-    This file contains:
+---
 
-      - Table creation
+## 📊 Dashboard
 
-      - Data exploration
+A Power BI dashboard can be created using the PostgreSQL analysis results to visualize:
 
-      - Data cleaning
+* Total Products
+* In-Stock Products
+* Out-of-Stock Products
+* Average Discount
+* Category-wise Product Count
+* Category-wise Pricing
+* Discount Distribution
+* Inventory Analysis
 
-      - SQL Business analysis
-  
-3. **Load the dataset into pgAdmin or any other PostgreSQL client**
+Dashboard screenshots will be added to this repository.
 
-      - Create a database and run the SQL file
+---
 
-      - Import the dataset (convert to UTF-8 if necessary)
+## 💡 Business Insights
 
-4. **Follow along with the YouTube video for full walkthrough. 👨‍💼**
+The analysis helps understand:
 
-## 📜 License
+* Product and category distribution
+* Pricing and discount strategies
+* Inventory availability
+* High-value products
+* Potential revenue opportunities
+* Products that may require inventory attention
 
-MIT — feel free to fork, star, and use in your portfolio.
+These insights can help e-commerce businesses make better **pricing, inventory, and product management decisions**.
 
-## 👨‍💻 About the Author
-Hey, I’m Amlan Mohanty — a Data Analyst & Content Creator.
-I break down complex data topics into simple, practical content that actually helps you land a job.
+---
 
- ### 🚀 Stay Connected & Join the Data Drool Community
-If you enjoyed this project and want to keep learning and growing as a data analyst, let’s stay in touch! I regularly share content around SQL, data analytics, portfolio projects, job tips, and more.
+## 🎓 Skills Demonstrated
 
-🎥 YouTube: [Amlan Mohanty](https://www.youtube.com/@amlanmohanty1)
-- Beginner-friendly tutorials, real-world projects, job and career advice
+**Technical Skills:**
 
-📺 Instagram: [data.drool](https://www.instagram.com/data.drool/)
-- Quick SQL tips, data memes, and behind-the-scenes content
+`SQL` `PostgreSQL` `Data Cleaning` `Data Analysis` `Data Visualization` `Power BI`
 
-💼 LinkedIn: [Amlan Mohanty](https://www.linkedin.com/in/amlanmohanty1/)
-- Let’s connect professionally and grow your data career
+**Analytical Skills:**
 
+`Exploratory Data Analysis` `Business Analysis` `Problem Solving` `Data Interpretation`
 
-## 💡 Thanks for checking out the project! Your support means a lot — feel free to star ⭐ this repo or share it with someone learning SQL.🚀
+---
+
+## 👩‍💻 About Me
+
+**Lahari Rongali**
+
+B.Tech in Artificial Intelligence & Machine Learning
+Interested in **Data Analyst,  AI/ML, and Python-related roles**.
+I enjoy working with data to identify patterns, generate insights, and solve real-world business problems.
 
