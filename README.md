@@ -262,5 +262,6 @@ These insights can help e-commerce businesses make better **pricing, inventory, 
 
 B.Tech in Artificial Intelligence & Machine Learning
 Interested in **Data Analyst,  AI/ML, and Python-related roles**.
+
 I enjoy working with data to identify patterns, generate insights, and solve real-world business problems.
 
