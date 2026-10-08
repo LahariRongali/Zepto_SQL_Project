@@ -53,7 +53,6 @@ The dataset contains Zepto product inventory information, including product name
 * **SQL**
 * **pgAdmin**
 * **Microsoft Excel / CSV**
-* **Power BI** *(for visualization, if applicable)*
 
 ---
 
